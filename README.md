@@ -1,15 +1,15 @@
 # Terraform Templates
 Terraform templates for various requirements
 
-To run the templatesggf
+To run the templates
 --------------------------
--> Install Terraform on your system (Guide: https://www.terraform.io/intro/getting-started/install.html)
+  -> Install Terraform on your system (Guide: https://www.terraform.io/intro/getting-started/install.html)
 
--> Download the file. (**IMPORTANT: Download the variables file too and place it into same directory as the .tf file**)
+  -> Download the file. (**IMPORTANT: Download the variables file too and place it into same directory as the .tf file**. Otherwise error will be generated.)
 
--> Run 'terraform plan' to get an idea of what is to be deployed. Put in the variable values when asked to.
+  -> Run **'terraform plan'** to get an idea of what is to be deployed. Put in the variable values when asked to.
 
-vgfg-> Finally run 'terraform apply'. Put the values when asked. This time the infrastructure would be deployed on particular provider.
+  -> Finally run **'terraform apply'**. Put the values when asked. This time the infrastructure would be deployed on particular provider.
 
 
 **WARNING:**
