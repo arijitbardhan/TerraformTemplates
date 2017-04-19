@@ -1,3 +1,16 @@
+# Configure the AWS Provider
+provider "aws" {
+	access_key = "ACCESS_KEY_HERE"
+  	secret_key = "SECRET_KEY_HERE"
+  	region     = "us-east-1"
+}
+
+# Creating an EC2 instance
+resource "aws_instance" "example" {
+  ami           = "ami-2757f631"
+  instance_type = "t2.micro"
+}
+
 # Configure the Microsoft Azure Provider
 provider "azurerm" {
 	subscription_id	= "${var.subscription_id}"
