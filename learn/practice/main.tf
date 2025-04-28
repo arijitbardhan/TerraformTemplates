@@ -75,7 +75,7 @@ data "aws_availability_zones" "available" {
 }
 
 resource "aws_vpc" "app_server_vpc" {
-  cidr_block = var.vpc_cidr_block
+  cidr_block = var.app_server_vpc_cidr_block
   
   tags = {
     Name = "${var.instance_name}_VPC"
@@ -84,7 +84,7 @@ resource "aws_vpc" "app_server_vpc" {
 
 resource "aws_subnet" "app_server_subnet" {
   vpc_id                  = aws_vpc.app_server_vpc.id
-  cidr_block              = cidrsubnet(var.vpc_cidr_block, 8, 15)
+  cidr_block              = cidrsubnet(var.app_server_vpc_cidr_block, 8, 15)
   availability_zone       = data.aws_availability_zones.available.names[0]
   map_public_ip_on_launch = var.map_public_ip_on_launch
   tags = {
@@ -140,7 +140,7 @@ resource "aws_network_interface_sg_attachment" "sg_attachment_ec2" {
 
 resource "aws_ebs_volume" "instance_storage" {
   availability_zone = data.aws_availability_zones.available.names[0] 
-  size              = var.size         # Specify the size of the volume in GiB
+  size              = var.root_block_device_volume_size         # Specify the size of the volume in GiB
 
   tags = {
     Name = "${var.instance_name}_EBS"
