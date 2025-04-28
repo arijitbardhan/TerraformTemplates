@@ -95,7 +95,7 @@ resource "aws_subnet" "app_server_subnet" {
 module "app_server_nic" {
   source        = "./modules/network-interface"
   subnet_id     = aws_subnet.app_server_subnet.id
-  private_ips   = [ cidrhost(aws_subnet.app_server_subnet.cidr_block, 15) ]
+  private_ips   = [ cidrhost(aws_subnet.app_server_subnet.cidr_block, 10) ]
   instance_name = var.instance_name
   access_key    = var.access_key
   secret_key    = var.secret_key
