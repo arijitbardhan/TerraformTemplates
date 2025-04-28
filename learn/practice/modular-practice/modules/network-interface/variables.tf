@@ -8,7 +8,7 @@ variable "subnet_id" {
 }
 
 variable "private_ips" {
-  type = string
+  type = list(string)
 }
 
 variable "access_key" {
