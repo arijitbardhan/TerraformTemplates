@@ -61,3 +61,11 @@ variable "app_server_vpc_cidr_block" {
 variable "app_server_subnet_public_ip" {
   type = bool
 }
+
+variable "security_group_ingress_ports" {
+  type = map(any)
+  default = { "ingress1" = [80, 80, [ "0.0.0.0/0" ]],
+              "ingress2" = [22, 22,[ "0.0.0.0/0" ]],
+              "ingress3" = [443, 443, [ "0.0.0.0/0" ]]
+            }  
+}

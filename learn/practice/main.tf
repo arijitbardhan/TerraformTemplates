@@ -65,7 +65,7 @@ resource "aws_instance" "app_server_instance" {
 
   network_interface {
     #delete_on_termination = true
-    device_index          = var.device_index
+    device_index          = var.ec2_network_interface_device_index
     network_interface_id  = aws_network_interface.app_server_nic.id
   }
 }
@@ -86,7 +86,7 @@ resource "aws_subnet" "app_server_subnet" {
   vpc_id                  = aws_vpc.app_server_vpc.id
   cidr_block              = cidrsubnet(var.app_server_vpc_cidr_block, 8, 15)
   availability_zone       = data.aws_availability_zones.available.names[0]
-  map_public_ip_on_launch = var.map_public_ip_on_launch
+  map_public_ip_on_launch = var.app_server_subnet_public_ip
   tags = {
     Name = "${var.instance_name}_Subnet"
   }
@@ -148,7 +148,7 @@ resource "aws_ebs_volume" "instance_storage" {
 }
 
 resource "aws_volume_attachment" "ebs_attachment_to_ec2" {
-  device_name = var.device_name
+  device_name = var.ebs_attachment_to_ec2_device_name
   volume_id   = aws_ebs_volume.instance_storage.id
   instance_id = aws_instance.app_server_instance.id
 }
