@@ -64,9 +64,9 @@ resource "aws_instance" "app_server_instance" {
   }
 
   network_interface {
-    #delete_on_termination = true
     device_index          = var.ec2_network_interface_device_index
-    network_interface_id  = aws_network_interface.app_server_nic.id
+    # network_interface_id  = aws_network_interface.app_server_nic.id
+    network_interface_id = module.app_server_nic.nic_id
   }
 }
 
@@ -92,14 +92,21 @@ resource "aws_subnet" "app_server_subnet" {
   }
 }
 
-resource "aws_network_interface" "app_server_nic" {
+module "app_server_nic" {
+  source = "./modules/network-interface"
   subnet_id   = aws_subnet.app_server_subnet.id
   private_ips = [ cidrhost(aws_subnet.app_server_subnet.cidr_block, 10) ]
-  
-  tags = {
-    Name = "${var.instance_name}_NetworkInterfaceCard"
-  }
+  instance_name = var.instance_name
 }
+
+# resource "aws_network_interface" "app_server_nic" {
+#   subnet_id   = aws_subnet.app_server_subnet.id
+#   private_ips = [ cidrhost(aws_subnet.app_server_subnet.cidr_block, 10) ]
+  
+#   tags = {
+#     Name = "${var.instance_name}_NetworkInterfaceCard"
+#   }
+# }
 
 resource "aws_security_group" "vpc_security_group" {
   name        = "Allow_Ingress_Ports"
