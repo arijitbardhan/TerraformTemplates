@@ -65,8 +65,8 @@ resource "aws_instance" "app_server_instance" {
 
   network_interface {
     device_index          = var.ec2_network_interface_device_index
-    network_interface_id  = aws_network_interface.app_server_nic.id
-    #network_interface_id = module.app_server_nic.nic_id
+    #network_interface_id  = aws_network_interface.app_server_nic.id
+    network_interface_id = module.app_server_nic.nic_id
   }
 }
 
@@ -92,24 +92,24 @@ resource "aws_subnet" "app_server_subnet" {
   }
 }
 
-# module "app_server_nic" {
-#   source        = "./modules/network-interface"
-#   subnet_id     = aws_subnet.app_server_subnet.id
-#   private_ips   = [ cidrhost(aws_subnet.app_server_subnet.cidr_block, 15) ]
-#   instance_name = var.instance_name
-#   access_key    = var.access_key
-#   secret_key    = var.secret_key
-#   region        = var.region
-# }
-
-resource "aws_network_interface" "app_server_nic" {
-  subnet_id   = aws_subnet.app_server_subnet.id
-  private_ips = [ cidrhost(aws_subnet.app_server_subnet.cidr_block, 10) ]
-  
-  tags = {
-    Name = "${var.instance_name}_NetworkInterfaceCard"
-  }
+module "app_server_nic" {
+  source        = "./modules/network-interface"
+  subnet_id     = aws_subnet.app_server_subnet.id
+  private_ips   = [ cidrhost(aws_subnet.app_server_subnet.cidr_block, 15) ]
+  instance_name = var.instance_name
+  access_key    = var.access_key
+  secret_key    = var.secret_key
+  region        = var.region
 }
+
+# resource "aws_network_interface" "app_server_nic" {
+#   subnet_id   = aws_subnet.app_server_subnet.id
+#   private_ips = [ cidrhost(aws_subnet.app_server_subnet.cidr_block, 10) ]
+  
+#   tags = {
+#     Name = "${var.instance_name}_NetworkInterfaceCard"
+#   }
+# }
 
 resource "aws_security_group" "vpc_security_group" {
   name        = "Allow_Ingress_Ports"
@@ -145,8 +145,8 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv6" {
 
 resource "aws_network_interface_sg_attachment" "sg_attachment_ec2" {
   security_group_id     = aws_security_group.vpc_security_group.id
-  #network_interface_id  = module.app_server_nic.nic_id
-  network_interface_id  = aws_network_interface.app_server_nic.id
+  network_interface_id  = module.app_server_nic.nic_id
+  #network_interface_id  = aws_network_interface.app_server_nic.id
 }
 
 resource "aws_ebs_volume" "instance_storage" {
