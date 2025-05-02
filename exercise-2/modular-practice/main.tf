@@ -41,7 +41,6 @@ resource "tls_private_key" "ssh_key_pair_data" {
 resource "aws_key_pair" "app_server_instance_key" {
   key_name   = "${var.instance_name}_key"
   public_key = trimspace(tls_private_key.ssh_key_pair_data.public_key_openssh)    # Generating public key data through tls_private_key resource at root level
-  #public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDjjRLbp1E33tjqSgvJdPy0d0O0skPuUuUHg98u4EDoYR5J1B5MLjiTao1AAtdngilUxHv7bXHbVSJCEbH9/6+Xs3gug8TThhuNfqcDt4r/SxKVshiaDd/iK1pFFo0YxXc47n0111zuanhKoDt/pUCrJ1h84lfoBEp7cUBnlrYa5vi1qApMOffHmlOwdMihJhIVXq+Y0br7rRMirAgfZtTn8Qeg3xnxRtrrFmKIdvvegnY86pTHCAnqiYWWytbKEazXopAJcR+kT6MHLEsco/w7ImP/3pu8yIqQYjjvD8ynyw17L663AIryuEPG4a623xLcKsR4GdTZl5mAwJpmnQBrIYfOhziW6EXNXCVUUbFfVPtMMtJa+xHqAmBYYKe/t71Afa0iB35liP+lYGJ+IsM980JbGAkQLQWPEr/iv67hhhMv8FlAsnVJciGwenWYDGZ0wR8vUrHrmAOdsnynFhUP9etuOn+s6iPAL40VzUrqRlUdX8XjmQg2Qr2a5zPbNV/x/+I7NIZk3RLQVFlHNSdOOsl6tNYYjJE+n4s0oejlBG+sxS53IJrHgCfmKIPkl9M0pS/BjTix3fg8OeFzmXKIuAO53dObvbD7WO2DH/cASpHLlyxfiH/sbiYmqqonKhEzJL3wb54FrwpETQ3P6utFXedcWLh0/lpN/HSF7d0E9Q== ubuntu@ip-172-31-46-136"
 }
 
 #EC2 configurations
